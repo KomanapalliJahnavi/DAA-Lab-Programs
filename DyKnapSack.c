@@ -1,0 +1,37 @@
+#include<stdio.h>
+
+int max(int a, int b){
+	return a>b?a:b ;
+}
+
+int main(){
+	int n,W,i,w;
+    printf("Enter Number of Items:");
+    scanf("%d",&n);
+    int wt[n], val[n];
+    printf("Enter Weight of Items:");
+    for(i=0;i<n;i++){
+        scanf("%d",&wt[i]);
+    }
+    printf("Enter Value of Items:");
+    for(i=0;i<n;i++){
+        scanf("%d",&val[i]);
+    }
+    printf("Enter Knapsack Capacity:");
+    scanf("%d",&W);
+
+    int dp[n+1][W+1];
+    for(i=0;i<=n;i++){
+        for(w=0;w<=W; w++){
+            if(i==0 || w==0)
+                dp[i][w]=0;
+        else if(wt[i-1]<=w){
+            dp[i][w]=max(val[i-1]+dp[i-1][w-wt[i-1]],dp[i - 1][w]);
+        }
+        else
+            dp[i][w] = dp[i - 1][w];
+        }
+    }
+    printf("Maximum Profit = %d\n", dp[n][W]);
+    return 0;
+}
